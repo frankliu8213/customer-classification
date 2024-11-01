@@ -144,25 +144,29 @@ function Result(): JSX.Element {
 
   return (
     <>
-      <div id="pdf-content">
-        <div className="container">
-          <h1 style={{ color: '#1890ff' }}>分析结果</h1>
-          <p>
-            <strong>客户姓名：</strong>
-            {sessionStorage.getItem('customerName')}
-          </p>
-          <p>
-            <strong>客户观念分型：</strong>
-            {sessionStorage.getItem('customerType')}
-          </p>
-          <p>
-            <strong>客户分析及策略：</strong>
-          </p>
-          {Object.keys(selectedTree).length > 0 ? (
-            <RenderTree tree={selectedTree} />
-          ) : (
-            <p>您未选择任何选项。</p>
-          )}
+      <div id="pdf-content" className="w-100">
+        <div className="container p-0">
+          <div className="row justify-content-center mx-0">
+            <div className="col-12 px-4">
+              <h1 style={{ color: '#1890ff' }}>分析结果</h1>
+              <p>
+                <strong>客户姓名：</strong>
+                {sessionStorage.getItem('customerName')}
+              </p>
+              <p>
+                <strong>客户观念分型：</strong>
+                {sessionStorage.getItem('customerType')}
+              </p>
+              <p>
+                <strong>客户分析及策略：</strong>
+              </p>
+              {Object.keys(selectedTree).length > 0 ? (
+                <RenderTree tree={selectedTree} />
+              ) : (
+                <p>您未选择任何选项。</p>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 
