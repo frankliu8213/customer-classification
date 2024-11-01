@@ -166,8 +166,8 @@ function Result(): JSX.Element {
         </div>
       </div>
 
-      <div className="button-group">
-        <button onClick={handleDownloadPDF} className="btn btn-success">
+      <div className="button-group d-flex flex-column gap-3 px-4 w-100">
+        <button onClick={handleDownloadPDF} className="btn btn-success w-100">
           <FontAwesomeIcon icon={faFilePdf} /> 生成 PDF
         </button>
         <button
@@ -175,13 +175,13 @@ function Result(): JSX.Element {
             sessionStorage.clear();
             navigate('/');
           }}
-          className="btn btn-warning"
+          className="btn btn-warning w-100"
         >
           <FontAwesomeIcon icon={faUserPlus} /> 新客户
         </button>
         <button
           onClick={() => navigate('/select-options')}
-          className="btn btn-primary"
+          className="btn btn-primary w-100"
         >
           <FontAwesomeIcon icon={faEdit} /> 返回修改
         </button>

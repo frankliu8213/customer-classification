@@ -16,25 +16,30 @@ function CustomerForm(): JSX.Element {
   };
 
   return (
-    <div className="container">
-      <h1 style={{ color: '#1890ff' }}>客户信息</h1>
-      <form onSubmit={handleSubmit} className="d-flex flex-column align-items-center">
-        <div style={{ width: '100%', maxWidth: '770px' }}>
-          <input
-            type="text"
-            value={customerName}
-            onChange={(e) => setCustomerName(e.target.value)}
-            required
-            placeholder="请输入客户姓名"
-            className="form-control"
-          />
+    <div className="container p-0">
+      <div className="row justify-content-center mx-0">
+        <div className="col-12 col-md-10 col-lg-8 px-4">
+          <h1 style={{ color: '#1890ff', marginBottom: '2rem' }}>客户信息</h1>
+          <form onSubmit={handleSubmit} className="d-flex flex-column align-items-start gap-4">
+            <div className="w-100">
+              <input
+                type="text"
+                value={customerName}
+                onChange={(e) => setCustomerName(e.target.value)}
+                required
+                placeholder="请输入客户姓名"
+                className="form-control form-control-lg"
+                style={{ width: 'calc(100% - 30px)' }}
+              />
+            </div>
+            <div className="button-group">
+              <button type="submit" className="btn btn-primary btn-lg">
+                <FontAwesomeIcon icon={faArrowRight} /> 下一步
+              </button>
+            </div>
+          </form>
         </div>
-        <div className="button-group">
-          <button type="submit" className="btn btn-primary">
-            <FontAwesomeIcon icon={faArrowRight} /> 下一步
-          </button>
-        </div>
-      </form>
+      </div>
     </div>
   );
 }
