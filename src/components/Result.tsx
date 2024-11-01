@@ -9,18 +9,21 @@ import html2canvas from 'html2canvas';
 
 interface RenderTreeProps {
   tree: Category;
+  depth?: number;
 }
 
-const RenderTree = ({ tree }: RenderTreeProps): JSX.Element => {
+const RenderTree = ({ tree, depth = 0 }: RenderTreeProps): JSX.Element => {
   if (!tree) return <></>;
 
   return (
     <ul>
       {Object.entries(tree).map(([key, value]) => (
         <li key={key}>
-          {key}
+          <span style={depth === 0 ? { color: '#1890ff', fontWeight: 'bold' } : undefined}>
+            {key}
+          </span>
           {value && typeof value === 'object' && !Array.isArray(value) ? (
-            <RenderTree tree={value} />
+            <RenderTree tree={value} depth={depth + 1} />
           ) : Array.isArray(value) ? (
             <ul>
               {value.map((item) => (
@@ -143,54 +146,64 @@ function Result(): JSX.Element {
   };
 
   return (
-    <>
-      <div id="pdf-content" className="w-100">
-        <div className="container p-0">
-          <div className="row justify-content-center mx-0">
+    <div className="d-flex flex-column min-vh-100 w-100">
+      <div id="pdf-content" className="flex-grow-1 w-100">
+        <div className="container-fluid">
+          <div className="row">
             <div className="col-12 px-4">
-              <h1 style={{ color: '#1890ff' }}>分析结果</h1>
-              <p>
-                <strong>客户姓名：</strong>
-                {sessionStorage.getItem('customerName')}
-              </p>
-              <p>
-                <strong>客户观念分型：</strong>
-                {sessionStorage.getItem('customerType')}
-              </p>
-              <p>
-                <strong>客户分析及策略：</strong>
-              </p>
-              {Object.keys(selectedTree).length > 0 ? (
-                <RenderTree tree={selectedTree} />
-              ) : (
-                <p>您未选择任何选项。</p>
-              )}
+              <h1 style={{ color: '#1890ff', marginBottom: '2rem' }}>分析结果</h1>
+              <div style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem' }}>
+                <p className="mb-3">
+                  <strong>客户姓名：</strong>
+                  <span className="ms-2">{sessionStorage.getItem('customerName')}</span>
+                </p>
+                <p className="mb-3">
+                  <strong>客户观念分型：</strong>
+                  <span className="ms-2">{sessionStorage.getItem('customerType')}</span>
+                </p>
+                <p className="mb-3" style={{ textAlign: 'left', marginLeft: '-1rem', fontStyle: 'normal' }}>
+                  <strong style={{ fontStyle: 'normal' }}>客户分析及策略：</strong>
+                </p>
+              </div>
+              <div style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem' }}>
+                {Object.keys(selectedTree).length > 0 ? (
+                  <RenderTree tree={selectedTree} depth={0} />
+                ) : (
+                  <p>您未选择任何选项。</p>
+                )}
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="button-group d-flex flex-column gap-3 px-4 w-100">
-        <button onClick={handleDownloadPDF} className="btn btn-success w-100">
-          <FontAwesomeIcon icon={faFilePdf} /> 生成 PDF
-        </button>
-        <button
-          onClick={() => {
-            sessionStorage.clear();
-            navigate('/');
-          }}
-          className="btn btn-warning w-100"
-        >
-          <FontAwesomeIcon icon={faUserPlus} /> 新客户
-        </button>
-        <button
-          onClick={() => navigate('/select-options')}
-          className="btn btn-primary w-100"
-        >
-          <FontAwesomeIcon icon={faEdit} /> 返回修改
-        </button>
+      <div className="container-fluid">
+        <div className="row justify-content-center">
+          <div className="col-12 px-4">
+            <div className="button-group d-flex flex-column gap-3 mb-3">
+              <button onClick={handleDownloadPDF} className="btn btn-success w-100">
+                <FontAwesomeIcon icon={faFilePdf} /> 生成 PDF
+              </button>
+              <button
+                onClick={() => {
+                  sessionStorage.clear();
+                  navigate('/');
+                }}
+                className="btn btn-warning w-100"
+              >
+                <FontAwesomeIcon icon={faUserPlus} /> 新客户
+              </button>
+              <button
+                onClick={() => navigate('/select-options')}
+                className="btn btn-primary w-100"
+              >
+                <FontAwesomeIcon icon={faEdit} /> 返回修改
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-    </>
+    </div>
   );
 }
 
